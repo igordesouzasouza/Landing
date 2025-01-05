@@ -12,7 +12,23 @@ export const Footer = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Mensagem enviada com sucesso!');
+    
+    // Formata a mensagem para o WhatsApp
+    const message = `*Nova mensagem do site*\n\n` +
+      `*Nome:* ${formData.name}\n` +
+      `*Email:* ${formData.email}\n` +
+      `*Mensagem:* ${formData.message}`;
+
+    // Codifica a mensagem para URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Cria o link do WhatsApp
+    const whatsappUrl = `https://wa.me/47984851442?text=${encodedMessage}`;
+    
+    // Abre em nova aba
+    window.open(whatsappUrl, '_blank');
+    
+    // Limpa o formulário
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -29,13 +45,28 @@ export const Footer = () => {
             <div className="mt-4">
               <h3 className="text-lg font-semibold mb-2">Redes Sociais</h3>
               <div className="flex space-x-4">
-                <a href="#" className="hover:text-gray-300">
+                <a 
+                  href="https://www.instagram.com/ar_condicionado_vmtech/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-300"
+                >
                   <Instagram size={22} />
                 </a>
-                <a href="#" className="hover:text-gray-300">
+                <a 
+                  href="https://w.app/p7IQra" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-300"
+                >
                   <Facebook size={22} />
                 </a>
-                <a href="#" className="hover:text-gray-300">
+                <a 
+                  href="https://w.app/p7IQra" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-300"
+                >
                   <MessageCircle size={22} />
                 </a>
               </div>

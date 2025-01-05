@@ -217,7 +217,7 @@ const App = () => {
                     </span>
                   </div>
                   <LiquidButton
-                    href={`https://wa.me/47984851442?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20${encodeURIComponent(product.name)}`}
+                    href={`https://w.app/p7IQra`}
                     className="w-full bg-gray-800 text-white px-4 py-2 rounded-lg text-center block"
                   >
                     Conversar com um vendedor
@@ -227,8 +227,10 @@ const App = () => {
             ))}
           </motion.div>
           <div className="mt-12 flex justify-end">
-            <button
-              onClick={() => window.location.href = "https://wa.me/47984851442?text=Olá,%20gostaria%20de%20ver%20o%20catálogo%20completo%20de%20produtos"}
+            <a
+              href="https://w.app/p7IQra"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-2 bg-gray-900 text-white px-12 py-4 rounded-lg text-lg font-medium overflow-hidden"
             >
               <motion.div
@@ -273,7 +275,7 @@ const App = () => {
                   <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
                 </svg>
               </span>
-            </button>
+            </a>
           </div>
         </motion.section>
 
