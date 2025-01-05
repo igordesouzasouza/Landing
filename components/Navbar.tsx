@@ -1,84 +1,85 @@
-'use client';
+"use client";
 
-import { Cart } from './Cart';
-import { CartProps } from '../types/cart';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-export const Navbar = ({ items, setItems }: CartProps) => {
+export const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHoveringContact, setIsHoveringContact] = useState(false);
+
   const scrollToSection = (sectionId: string) => {
-    if (sectionId === 'home') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    } else if (sectionId === 'footer-contact') {
-      // Scroll para o formulário de contato no footer
-      const footer = document.getElementById('footer-contact');
-      if (footer) {
-        footer.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    } else {
+    setIsOpen(false);
+    
+    setTimeout(() => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
+        const offset = element.offsetTop - 100;
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth"
         });
       }
-    }
+    }, 300);
   };
 
   return (
-    <nav className="fixed w-full z-50 px-4 py-2">
-      <div className="max-w-6xl mx-auto backdrop-blur-md bg-white/90 rounded-2xl shadow-lg px-6">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <h1 className="text-2xl font-extrabold font-poppins select-none text-gray-800">Vm Tech Climatiza</h1>
-          </div>
-          <div className="flex items-center space-x-8">
-            <div className="hidden md:flex space-x-8">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Home
-              </button>
-              <button 
-                onClick={() => scrollToSection('sobre')}
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Sobre
-              </button>
-              <button 
-                onClick={() => scrollToSection('produtos')}
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Produtos
-              </button>
-              <button 
-                onClick={() => scrollToSection('regiao')}
-                className="text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Região de Atendimento
-              </button>
-              <button 
-                onClick={() => scrollToSection('footer-contact')}
-                className="text-white bg-gray-800 px-4 py-2 rounded-lg hover:bg-gray-950 transition-colors"
-              >
-                Solicitar Contato
-              </button>
-            </div>
-            <Cart 
-              items={items} 
-              setItems={setItems}
+    <nav className="fixed left-1/2 transform -translate-x-1/2 w-[70%] max-w-7xl z-50 px-8 py-4 backdrop-blur-md bg-white/5 rounded-full shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] border border-white/20 mt-8">
+      <div className="mx-auto flex justify-between items-center">
+        <motion.h1 
+          className="text-2xl font-extrabold select-none mix-blend-difference"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img src="/logue.png" alt="Logo" className="w-40 h-12" />
+        </motion.h1>
+        
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)} className="mix-blend-difference">
+            Menu
+          </button>
+        </div>
+
+        <div className="hidden md:flex items-center space-x-8">
+          <NavLink onClick={() => scrollToSection("home")}>Home</NavLink>
+          <NavLink onClick={() => scrollToSection("sobre")}>Sobre Nós</NavLink>
+          <NavLink onClick={() => scrollToSection("produtos")}>Nossos Serviços</NavLink>
+          <NavLink onClick={() => scrollToSection("regiao")}>Por que VM?</NavLink>
+          <motion.button
+            onClick={() => scrollToSection("footer-contact")}
+            className="group relative inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-2 rounded-full overflow-hidden"
+          >
+            <motion.div
+              className="absolute inset-0 bg-white"
+              animate={{
+                opacity: isHoveringContact ? 1 : 0
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut"
+              }}
             />
-          </div>
+            <span 
+              className="relative flex items-center gap-2 group-hover:text-gray-900 transition-colors duration-300"
+              onMouseEnter={() => setIsHoveringContact(true)}
+              onMouseLeave={() => setIsHoveringContact(false)}
+            >
+              Contate-nos
+            </span>
+          </motion.button>
         </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar; 
+const NavLink = ({ children, onClick }: { children: React.ReactNode; onClick: () => void }) => (
+  <motion.button
+    onClick={onClick}
+    className="mix-blend-difference font-medium"
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    {children}
+  </motion.button>
+);
+
+export default Navbar;
